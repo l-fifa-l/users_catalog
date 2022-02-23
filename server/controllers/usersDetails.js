@@ -2,27 +2,31 @@ import User from '../models/user';
 
 export const addUser = async (req, res) => {
   try {
-    const { name, email, username } = req.body;
-    // validate the user name, email, password
-    if (!name) return res.status(400).send('Name is required');
-    if (!username || username.length < 4) {
-      return res
-        .status(400)
-        .send('Username is required and should be min 4 character long');
-    }
-    let userExist = await User.findOne({ email }).exec();
-    if (userExist) return res.status(400).send('Email is taken');
-
-    //register
-    const user = new User({
-      name,
-      email,
-      username,
+    const userArray = req.body.formValues;
+    userArray.forEach(async ({ name, email, username }) => {
+      console.log(name, email, username);
+      //
+      // validate the user name, email, password
+      if (!name) return res.status(400).send('Name is required');
+      if (!username || username.length <= 3) {
+        return res
+          .status(400)
+          .send('Username is required and should be min 4 character long');
+      }
+      let userExist = await User.findOne({ email }).exec();
+      if (userExist) return res.status(400).send('Email is taken');
+      console.log('1');
+      //register
+      const user = new User({
+        name,
+        email,
+        username,
+      });
+      console.log('2');
+      // save user
+      await user.save();
+      console.log('3');
     });
-
-    // save user
-    await user.save();
-    // console.log("saved user", user);
     return res.json({ ok: true });
   } catch (error) {
     console.log(error);
