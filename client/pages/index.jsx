@@ -43,30 +43,39 @@ export default function Component() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
+      onSubmit={handleSubmit}
+    >
       {formValues.map((element, index) => (
-        <div className="form-inline" key={index}>
-          <label>Name</label>
-          <input
-            type="text"
-            name="name"
-            value={element.name || ''}
-            onChange={(e) => handleChange(index, e)}
-          />
-          <label>Email</label>
-          <input
-            type="text"
-            name="email"
-            value={element.email || ''}
-            onChange={(e) => handleChange(index, e)}
-          />
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            value={element.username || ''}
-            onChange={(e) => handleChange(index, e)}
-          />
+        <div className=" flex flex-row" key={index}>
+          <div className="">
+            <label className="">Name</label>
+            <input
+              type="text"
+              name="name"
+              value={element.name || ''}
+              onChange={(e) => handleChange(index, e)}
+            />
+          </div>
+          <div>
+            <label>Email</label>
+            <input
+              type="text"
+              name="email"
+              value={element.email || ''}
+              onChange={(e) => handleChange(index, e)}
+            />
+          </div>
+          <div>
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              value={element.username || ''}
+              onChange={(e) => handleChange(index, e)}
+            />
+          </div>
           {index ? (
             <button
               type="button"
@@ -79,7 +88,7 @@ export default function Component() {
         </div>
       ))}
 
-      <div className="button-section">
+      <div className="item-center">
         <button
           className="button add"
           type="button"
